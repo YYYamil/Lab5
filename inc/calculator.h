@@ -17,16 +17,17 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 SPDX-License-Identifier: MIT
 *********************************************************************************************************************/
 
-#ifndef KEYBOARD_H_
-#define KEYBOARD_H_
+#ifndef CALCULATOR_H_
+#define CALCULATOR_H_
 
-/** @file digital.h
- ** @brief Declaraciones del modulo para la gestion de entrada y salidas digitales
+/** @file calculator.h
+ ** @brief Declaraciones del modulo para la gestion de una calculadora
  **/
 
 /* === Headers files inclusions ==================================================================================== */
 
 #include <stdint.h>
+#include <stdbool.h>
 /* === Header for C++ compatibility ================================================================================ */
 
 #ifdef __cplusplus
@@ -37,22 +38,60 @@ extern "C" {
 
 /* === Public data type declarations =============================================================================== */
 
-//! Estructura que representa una salida digital
 
+//! Estructura que representa un objeto calculadora
+typedef struct calculator_s * calculator_t;
+
+//! Tipo de dato para las funciones de operaciones
+typedef int (operations_func_t)(int , int);
 
 /* === Public variable declarations ================================================================================ */
 
 /* === Public function declarations ================================================================================ */
 
 /**
- * @brief Funcion para crear una salida .-NombredeclaseMetodo - nos quedamos 2 para funcionar con un puerto y un pin
- *
- * @param port
- * @param pin
- * @return digital_output_t
-
+ * @brief Crea un objeto tipo calculadora
+ * 
+ * @return calculator_t Puntero que se devuelve a ese objeto
  */
 
+ calculator_t CalculatorCreate(void);
+
+/**
+ * @brief Operacion que agrega una operacion un objeto calculadora
+ * 
+ * @param calculator puntero a un objeto calculadora
+ * @param function Operacion que se agrega
+ * @return true 
+ * @return false 
+ */
+bool CalculatorAddOperation(calculator_t calculator, char operator, operations_func_t function);
+
+/**
+ * @brief 
+ * 
+ * @param calculator Puntero a una calculadora
+ * @param expresion Cadena con la expresion a calcular
+ * @return int Resultado de la operacion
+ */
+int CalculatorCalculate (calculator_t calculator, const char * expresion);
+/**
+ * @brief Operacion de suma para agregar a la calculadora
+ * 
+ * @param a Primer operando
+ * @param b Segundo operando
+ * @return int Resultado de la operacion
+ */
+int OperationAdd(int a, int b);
+
+/**
+ * @brief Operacion de resta para agregar a la calculadora
+ * 
+ * @param a Primer operando
+ * @param b Segundo operando
+ * @return int Resultado
+ */
+ int OperationSubstract(int a, int b);
 
 /* === End of conditional blocks =================================================================================== */
 
