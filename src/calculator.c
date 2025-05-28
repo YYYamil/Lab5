@@ -30,9 +30,9 @@ SPDX-License-Identifier: MIT
 /* === Headers files inclusions =============================================================== */
 
 #include "calculator.h"
-#include<stlib.h>
-#include<string.h>
-#include "digital.h"    //incluyo cabeceras de digitales
+#include <stdlib.h>
+#include <string.h>
+
 
 /* === Macros definitions ====================================================================== */
 
@@ -128,7 +128,7 @@ int CalculatorCalculate(calculator_t calculator, const char * expression){
         return 0;
     }
 
-    for (int i=0, i< strlen(expression); i++){
+    for (int i=0; i < strlen(expression); i++; ){
         if((expression[i] < '0') || (expression > '9')){
             operator=expression[i];
             a= atoi(expression);
@@ -137,11 +137,11 @@ int CalculatorCalculate(calculator_t calculator, const char * expression){
 
         }
     }
-    operation_t operation= FindOperation(calculator, operator)
+    operation_t operation= FindOperation(calculator, operator);
     if(operation){
         result= operation->function(a,b);
     }
-    resturn result;
+    return result;
 }
 
 int OperationAdd(int a, int b){
