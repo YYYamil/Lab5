@@ -55,11 +55,32 @@ SPDX-License-Identifier: MIT
 /* === Public function implementation
  * ========================================================= */
 
-
+/**
+ * @brief Operación de multiplicación para agregar a la calculadora
+ * 
+ * @param a Primer operando
+ * @param b Segundo operando
+ * @return int Resultado de la operación
+ */
 int OperationMuliply(int a, int b) { return a * b; }
+
+/**
+ * @brief Operación de división para agregar a la calculadora
+ * 
+ * @param a Primer operando
+ * @param b Segundo operando
+ * @return int Resultado de la operación (0 si b es 0)
+ */
+int OperationDivide(int a, int b) {
+    if (b == 0) return 0; // Evitar división por cero
+    return a / b;
+}
+
+
 int main(void) {
-  static const char suma[] = "23+13";   //declaracion abreviada de array, constante
-  static const char productoç[] = "2*4";
+  static const char suma[] = "23+13"; 
+  static const char resta[] = "23-10";   //declaracion abreviada de array, constante
+  static const char producto[] = "2*4";
 
   int resultado;
 
@@ -70,6 +91,8 @@ int main(void) {
 
   printf("%s=%i\r\n", suma, CalculatorCalculate(calculadora, suma));
   printf("%s=%i\r\n", producto, CalculatorCalculate(calculadora, producto));
+
+  return 0;
 }
 
 /* === End of documentation

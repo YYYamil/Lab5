@@ -48,7 +48,7 @@ SPDX-License-Identifier: MIT
  */
 typedef struct operation_s * operation_t;   //puntero a estructura
 
-struct operations_s {   //lista simplemente enlazada
+struct operation_s {   //lista simplemente enlazada
     char operator;
     operation_func_t function;
     operation_t next;   //puntero a la siguiente operacion
@@ -61,7 +61,7 @@ struct operations_s {   //lista simplemente enlazada
  */
 struct calculator_s{
     operation_t operations;
-}
+};
 
 
 /* === Private variable declarations =========================================================== */
@@ -72,7 +72,7 @@ struct calculator_s{
  * 
  * @param calculator Puntero a calculadora
  * @param operator operacion a buscar
- * @return operation_t Punero a la operacion encontrada *NULL si no esta
+ * @return operation_t Puntero a la operacion encontrada *NULL si no esta
  */
 static operation_t FindOperation(calculator_t calculator, char operator);
 
@@ -84,10 +84,10 @@ static operation_t FindOperation(calculator_t calculator, char operator);
 
 /* === Public function implementation ========================================================= */
 
-static operations_t FindOperation(calculator_t calculator, char operator){
-    operation_t currents = calculator -> operations;
+static operation_t FindOperation(calculator_t calculator, char operator){
+    operation_t current = calculator -> operations;
     while (current != NULL){
-        if(current->operator= operator){
+        if(current->operator== operator){
             return current;
         }
         current = current -> next;
@@ -95,17 +95,19 @@ static operations_t FindOperation(calculator_t calculator, char operator){
     return NULL;
 }
 
+
+
 calculator_t CalculatorCreate(void){
     calculator_t self = malloc(sizeof(struct calculator_s));
     if (self){
-        self->operation = NULL;
+        self-> operations = NULL;
     }
     return self;
     
 }
 
-bool CalculatorAddOperation(calculator_t calculator, char operaton, operation_func_t function){
-    if (calculatorb|| !function || FindOperation(calculator, operator)){
+bool CalculatorAddOperation(calculator_t calculator, char operator, operation_func_t function){
+    if (!calculator|| !function || FindOperation(calculator, operator)){
         return false;
     }
     operation_t operation = malloc (sizeof(struct operation_s));
@@ -121,33 +123,46 @@ bool CalculatorAddOperation(calculator_t calculator, char operaton, operation_fu
 }
 
 int CalculatorCalculate(calculator_t calculator, const char * expression){
-    int a=0, b=0;
-    char operator=0;
-    int result =0;
-    if(calculator || !expression){
+    
+    if(!calculator || !expression){
         return 0;
     }
 
-    for (int i=0; i < strlen(expression); i++; ){
-        if((expression[i] < '0') || (expression > '9')){
-            operator=expression[i];
-            a= atoi(expression);
-            b= atoi(expression * i +1);
-            break;
+    int a=0, b=0;
+    char operator=0;
+    int i =0;
+    
+    while (expression[i] >= '0' && expression[i] <= '9') {
+        a = a * 10 + (expression[i] - '0');
+        i++;
+    }
 
-        }
+    // Extraer el operador
+    if (expression[i] == '+' || expression[i] == '-' || expression[i] == '*' || expression[i] == '/') {
+        operator = expression[i];
+        i++;
+    } else {
+        return 0; // Operador no válido
     }
-    operation_t operation= FindOperation(calculator, operator);
-    if(operation){
-        result= operation->function(a,b);
+
+    // Extraer el segundo operando (b)
+    while (expression[i] >= '0' && expression[i] <= '9') {
+        b = b * 10 + (expression[i] - '0');
+        i++;
     }
-    return result;
+
+    // Buscar y ejecutar la operación
+    operation_t operation = FindOperation(calculator, operator);
+    if (operation) {
+        return operation->function(a, b);
+    }
+    return 0;
 }
 
 int OperationAdd(int a, int b){
     return a+b;
 }
-int OperatioSubstraction(int a, int b){
+int OperationSubstract(int a, int b){
     return a-b;
 }
 

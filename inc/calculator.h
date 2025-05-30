@@ -43,7 +43,7 @@ extern "C" {
 typedef struct calculator_s * calculator_t;
 
 //! Tipo de dato para las funciones de operaciones
-typedef int (operations_func_t)(int , int);
+typedef int (* operation_func_t)(int , int);
 
 /* === Public variable declarations ================================================================================ */
 
@@ -65,7 +65,7 @@ typedef int (operations_func_t)(int , int);
  * @return true 
  * @return false 
  */
-bool CalculatorAddOperation(calculator_t calculator, char operator, operations_func_t function);
+bool CalculatorAddOperation(calculator_t calculator, char operator, operation_func_t function);
 
 /**
  * @brief 
@@ -99,4 +99,4 @@ int OperationAdd(int a, int b);
 }
 #endif
 
-#endif /* KEYBOARD_H_ */
+#endif /* CALCULATOR_H_ */
