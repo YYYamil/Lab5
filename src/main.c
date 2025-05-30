@@ -81,16 +81,24 @@ int main(void) {
   static const char suma[] = "23+13"; 
   static const char resta[] = "23-10";   //declaracion abreviada de array, constante
   static const char producto[] = "2*4";
+  static const char divide[] = "12/4";
 
   int resultado;
 
   calculator_t calculadora = CalculatorCreate();
+  
   CalculatorAddOperation(calculadora, '+', OperationAdd);
   CalculatorAddOperation(calculadora, '-', OperationSubstract);
   CalculatorAddOperation(calculadora, '*', OperationMuliply);
+  CalculatorAddOperation(calculadora, '/', OperationDivide);
+
 
   printf("%s=%i\r\n", suma, CalculatorCalculate(calculadora, suma));
+  printf("%s=%i\r\n", resta, CalculatorCalculate(calculadora, resta));
+
   printf("%s=%i\r\n", producto, CalculatorCalculate(calculadora, producto));
+  printf("%s=%i\r\n", divide, CalculatorCalculate(calculadora, divide));
+
 
   return 0;
 }
